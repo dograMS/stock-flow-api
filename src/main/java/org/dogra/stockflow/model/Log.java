@@ -1,6 +1,7 @@
 package org.dogra.stockflow.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,21 +22,21 @@ public class Log {
     @Column(nullable = false)
     private LocalDateTime logDate;
 
-    @ManyToOne
-    private Item item_id;
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Item item;
 
-    @ManyToOne
-    private Party party_id;
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Party party;
 
-    @ManyToOne
-    private Staff staff_id;
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Staff staff;
 
     @Column(nullable = false)
     @Size(min = 1)
     private Long quantity;
 
     @Column(nullable = false)
-    @Size(min = 1)
+    @Positive(message = "Value Must be positive")
     private Long unitPrice;
 
     @Enumerated(EnumType.STRING)

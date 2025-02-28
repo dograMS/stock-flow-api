@@ -1,7 +1,9 @@
 package org.dogra.stockflow.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,9 +25,11 @@ public class Staff{
     private long id;
 
     @Column(nullable = false, unique = true)
+    @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9]$", message = "username must be a single word")
     private String username;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
 
