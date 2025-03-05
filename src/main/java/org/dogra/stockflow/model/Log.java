@@ -2,7 +2,7 @@ package org.dogra.stockflow.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,17 +22,17 @@ public class Log {
     @Column(nullable = false)
     private LocalDateTime logDate;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Item item;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Party party;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Staff staff;
 
     @Column(nullable = false)
-    @Size(min = 1)
+    @PositiveOrZero(message = "Value cannot be Negative")
     private Long quantity;
 
     @Column(nullable = false)

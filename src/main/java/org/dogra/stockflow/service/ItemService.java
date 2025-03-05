@@ -26,7 +26,7 @@ public class ItemService {
         this.providerPartyRepo = partyRepo;
     }
 
-    public void add(Item item, List<Long> providers){
+    public Item add(Item item, List<Long> providers){
 
         item.getProviders()
                 .addAll(providerPartyRepo.findAllById(providers));
@@ -34,6 +34,8 @@ public class ItemService {
         Item addedItem = itemRepo.save(item);
 
         logger.debug("Item added : {}", addedItem);
+
+        return addedItem;
     }
 
     public void removeItem(List<Long> ids){
