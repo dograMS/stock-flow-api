@@ -32,12 +32,16 @@ public class JwtUtil {
     }
 
 
-    public String genTokens(String username) {
+    public String genTokens(CatUserDetails user) {
+
+        String username = user.getUsername();
+        String roles = user.getAuthorities().toString();
 
         try {
 
             return Jwts.builder()
                     .setSubject(username)
+                    .claim("roles", roles)
                     .setIssuedAt(new Date(System.currentTimeMillis()))
                     .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 + 1000))
                     .signWith(SignatureAlgorithm.HS256, getSecretKey().getBytes())
@@ -73,10 +77,16 @@ public class JwtUtil {
 
     public Claims extractClaims(String tokens){
 
-        return Jwts.parserBuilder()
-                .setSigningKey(getSecretKey().getBytes())
-                .build().parseClaimsJws(tokens)
-                .getBody();
+        try{
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSecretKey().getBytes())
+                    .build().parseClaimsJws(tokens)
+                    .getBody();
+        } catch (Exception e) {
+            logger.error("Failed to Extract Claims from Tokens --{}", e.getMessage());
+        }
+
+        return null;
     }
 
 

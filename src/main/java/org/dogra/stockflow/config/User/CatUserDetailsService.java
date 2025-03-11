@@ -13,7 +13,7 @@ public class CatUserDetailsService implements UserDetailsService {
     private StaffRepo repo;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public CatUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Staff staffMember;
 
