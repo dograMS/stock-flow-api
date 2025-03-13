@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Party { // party represents an entity that either provide or consume items
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
@@ -31,10 +31,10 @@ public class Party { // party represents an entity that either provide or consum
     private String company;
 
     @Email(message = "Invalid email address format")
-    @Column(nullable = true, unique = true)
+    @Column(unique = true)
     private String email;
 
     @Column(nullable = false)
-    private String addressLine;
+    private String address;
 
 }
