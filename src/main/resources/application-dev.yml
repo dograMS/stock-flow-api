@@ -1,3 +1,21 @@
 logging:
   level:
     root: info
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+    show-sql: true
+
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+      data-locations:
+        - classpath:data/item_data.sql
+        - classpath:data/party_data.sql
+        - classpath:data/role_data.sql
+        - classpath:data/staff_data.sql

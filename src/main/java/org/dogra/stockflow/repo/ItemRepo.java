@@ -17,7 +17,7 @@ public interface ItemRepo extends JpaRepository<Item, Long> {
     List<Party> findItemProviders(Long id);
 
     @Query("SELECT i FROM Item i WHERE " +
-            "LOWER(i.name) = LOWER(CONCAT('%', :keyword, '%'))")
+            "LOWER(i.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Item> searchItem(String keyword);
 
 
@@ -27,7 +27,7 @@ public interface ItemRepo extends JpaRepository<Item, Long> {
     List<Item> getItemWithPriceLimit(Long from, Long to);
 
     @Query("SELECT i FROM Item i WHERE " +
-            "LOWER(i.name) = LOWER(CONCAT('%', :keyword, '%')) AND " +
+            "LOWER(i.name) LIKE LOWER(CONCAT('%', :keyword, '%')) AND " +
             "i.baseUnitPrice >= :from AND " +
             "i.baseUnitPrice <= :to")
     List<Item> searchItemWithPriceLimit(String keyword, Long from, Long to);

@@ -15,15 +15,11 @@ spring:
       ${PROFILE}
 
   jpa:
-    hibernate:
-      ddl-auto: update
-
     properties:
       hibernate:
         format-sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-    show-sql: true
 
 
 springdoc:

@@ -1,7 +1,12 @@
 package org.dogra.stockflow.exception;
 
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice(basePackages = {"org.dogra.stockflow.controller"})
+@RestControllerAdvice(basePackages = {"org.dogra.stockflow.controller"})
 public class DbException {
+
+
+
 }

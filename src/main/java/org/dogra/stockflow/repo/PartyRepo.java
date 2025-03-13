@@ -21,7 +21,7 @@ public interface PartyRepo extends JpaRepository<Party, Long> {
             "LOWER(p.name) = LOWER(CONCAT('%' , :keyword , '%' )) OR " +
             "CAST(p.phone AS string) = LOWER(CONCAT('%' , :keyword , '%' )) OR " +
             "LOWER(p.email) = LOWER(CONCAT('%' , :keyword , '%' )) OR " +
-            "LOWER(p.addressLine) = LOWER(CONCAT('%' , :keyword , '%' ))")
+            "LOWER(p.address) = LOWER(CONCAT('%' , :keyword , '%' ))")
     List<Party> findKeywordMatch(String keyword);
 
 }
