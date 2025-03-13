@@ -22,7 +22,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @CrossOrigin
 public class SecurityConfig {
 
-    private int encoderStrength = 12;
+    private final int encoderStrength = 12;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

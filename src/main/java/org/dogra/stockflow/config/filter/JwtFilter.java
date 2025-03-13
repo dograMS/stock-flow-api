@@ -11,8 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -46,14 +48,18 @@ public class JwtFilter extends OncePerRequestFilter {
                        applicationContext.getBean(CatUserDetailsService.class).loadUserByUsername(username);
 
                if(jwtUtil.validateTokens(jwtTokens, userDetails)){
+                   UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(
+                           userDetails, null,
+                           userDetails.getAuthorities()
+                   );
 
+                   upat.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                   SecurityContextHolder.getContext().setAuthentication(upat);
                }
             }
 
-
-
         }catch (Exception e){
-
+            logger.error("Jwt Security Filter failure -- "  + e.getMessage());
         }finally {
             filterChain.doFilter(request, response);
         }
