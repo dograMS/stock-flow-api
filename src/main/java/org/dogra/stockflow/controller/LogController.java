@@ -37,13 +37,13 @@ public class LogController {
         }
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<?> LogById(@PathVariable Long id){
-//        try{
-//            return new ResponseEntity<>();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> LogById(@PathVariable Long id){
+        try{
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

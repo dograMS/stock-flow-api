@@ -6,7 +6,7 @@ public class UserNotFoundException extends Exception {
         super("specified user not found");
     }
 
-    UserNotFoundException(String mesg){
+    public UserNotFoundException(String mesg){
         super(mesg);
     }
 

@@ -27,11 +27,9 @@ public class Stock {
     private Party provider;
 
     @Column(nullable = false)
-    @Min(value = 0, message = "stock cannot be neagative")
     private Long currentStock;
 
     @Column(nullable = false)
-    @Min(value = 0, message = "stock cannot be neagative")
     private Long minimumStock;
 
     @Column(nullable = false)

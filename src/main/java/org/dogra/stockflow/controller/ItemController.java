@@ -2,6 +2,7 @@ package org.dogra.stockflow.controller;
 
 import org.dogra.stockflow.model.Item;
 import org.dogra.stockflow.model.dto.ItemDTO;
+import org.dogra.stockflow.model.dto.PageResponseDTO;
 import org.dogra.stockflow.service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ class ItemController {
 
         Page<Item> pageRes = itemService.searchItem(size, page, q);
 
-    return new ResponseEntity<>(pageRes, HttpStatus.OK);
+    return new ResponseEntity<>(PageResponseDTO.of(pageRes), HttpStatus.OK);
     }
 
 
