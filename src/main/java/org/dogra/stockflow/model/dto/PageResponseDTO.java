@@ -29,8 +29,21 @@ public class PageResponseDTO<T> implements Serializable {
 
     }
 
+    public <E> PageResponseDTO(List<T>content, Page<E> pagedResult){
+        this.content = content;
+        this.pageNUmber = pagedResult.getNumber();
+        this.pageSize = pagedResult.getSize();
+        this.totalElements = pagedResult.getNumberOfElements();
+        this.totalPages = pagedResult.getTotalPages();
+        this.empty = pagedResult.isEmpty();
+        this.last = pagedResult.isLast();
+        this.sorted = pagedResult.getSort().isSorted();
+    }
+
+
+
     public static <E> PageResponseDTO<E> of(Page<E> pagedResult){
-        return new PageResponseDTO<E>(pagedResult);
+        return new PageResponseDTO(pagedResult);
     }
 
 }
