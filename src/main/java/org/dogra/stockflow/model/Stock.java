@@ -27,9 +27,11 @@ public class Stock {
     private Party provider;
 
     @Column(nullable = false)
+    @Min(value = 0, message = "stock not available")
     private Long currentStock;
 
     @Column(nullable = false)
+    @Min(value = 0, message = "cannot be negative")
     private Long minimumStock;
 
     @Column(nullable = false)

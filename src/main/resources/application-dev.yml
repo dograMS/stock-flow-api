@@ -19,3 +19,4 @@ spring:
         - classpath:data/party_data.sql
         - classpath:data/role_data.sql
         - classpath:data/staff_data.sql
+        - classpath:data/log_data.sql

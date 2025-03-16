@@ -1,8 +1,8 @@
 package org.dogra.stockflow.controller;
 
 import org.dogra.stockflow.model.Log;
+import org.dogra.stockflow.model.dto.PageResponseDTO;
 import org.dogra.stockflow.service.LogService;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,23 +19,10 @@ public class LogController {
     @GetMapping("/{sortBy}&{page}&{limit}")
     public ResponseEntity<?> getLogPage(@PathVariable String sortBy,
                                         @PathVariable int page, @PathVariable int limit) {
-        try {
-            Page<Log> pageRequest = logService.getLogs(page, limit, sortBy);
-
-            return new ResponseEntity<>(pageRequest, HttpStatus.OK);
-        }catch(Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        PageResponseDTO<?> pageRes = logService.getLogs(page, limit, sortBy);
+        return new ResponseEntity<>(pageRes, HttpStatus.OK);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<?> addLog(@RequestBody Log newLog){
-        try{
-            return new ResponseEntity<>(logService.add(newLog), HttpStatus.OK);
-        }catch (Exception e) {
-            return new ResponseEntity<>("Cannot add Log for unknown reason", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> LogById(@PathVariable Long id){

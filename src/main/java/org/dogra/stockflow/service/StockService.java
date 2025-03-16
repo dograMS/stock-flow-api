@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +35,16 @@ public class StockService {
         this.stockRepo = stockRepo;
         this.itemRepo = itemRepo;
         this.partyRepo = partyRepo;
+    }
+
+    public void deleteLog(Long id) throws Exception {
+        AtomicBoolean notFound = new AtomicBoolean(false);
+        stockRepo.findById(id).ifPresentOrElse(stockRepo::delete,
+                () -> notFound.set(true));
+
+        if (notFound.get()) {
+            throw new Exception("Cannot Delete: No log found with ID: " + id);
+        }
     }
 
     public StockResponseDTO addNewStock(StockRequestDTO requestDTO) throws ResourceNotFound {

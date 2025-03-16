@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/stock")
 public class StockController {
 
     private final Logger logger = LoggerFactory.getLogger(StockController.class);
@@ -20,7 +21,7 @@ public class StockController {
         this.stockService = stockService;
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<?> addNewStock(@RequestBody StockRequestDTO stockRequestDTO) {
 
         try {
@@ -29,6 +30,16 @@ public class StockController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteStockEntry(@PathVariable Long id){
+        try{
+            stockService.deleteLog(id);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{page}&{size}")
