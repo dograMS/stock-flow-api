@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,12 +41,12 @@ public class LogService {
     }
 
 
-    public PageResponseDTO<?> getLogs(int pageSize, int pageNumber, String sortBy) {
+    public PageResponseDTO<?> getLogs(int pageSize, int pageNumber) {
 
         pageNumber = Math.max(pageNumber, 0);
         pageSize = (pageSize < 1) ? 10 : pageSize;
 
-        Sort sort = Sort.by(sortBy).descending();
+        Sort sort = Sort.by("logDate").descending();
         Pageable pageRequest = PageRequest.of(pageNumber, pageSize, sort);
         Page<Log> pageRes = logRepo.findAll(pageRequest);
 
@@ -57,4 +58,8 @@ public class LogService {
         return new PageResponseDTO<>(result, pageRes);
     }
 
+    public LogDTO findLongById(Long id) throws Exception {
+        Log log = logRepo.findById(id).orElseThrow(() -> new Exception("cannot find log with Id : " + id));
+        return new LogDTO(log);
+    }
 }

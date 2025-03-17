@@ -16,10 +16,9 @@ public class LogController {
         this.logService = logService;
     }
 
-    @GetMapping("/{sortBy}&{page}&{limit}")
-    public ResponseEntity<?> getLogPage(@PathVariable String sortBy,
-                                        @PathVariable int page, @PathVariable int limit) {
-        PageResponseDTO<?> pageRes = logService.getLogs(page, limit, sortBy);
+    @GetMapping("/page/{page}&{limit}")
+    public ResponseEntity<?> getLogPage(@PathVariable int page, @PathVariable int limit) {
+        PageResponseDTO<?> pageRes = logService.getLogs(page, limit);
         return new ResponseEntity<>(pageRes, HttpStatus.OK);
     }
 
@@ -27,9 +26,9 @@ public class LogController {
     @GetMapping("/{id}")
     public ResponseEntity<?> LogById(@PathVariable Long id){
         try{
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>( logService.findLongById(id), HttpStatus.OK);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 

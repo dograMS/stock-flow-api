@@ -7,12 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 public class Log {
 
     @Id
@@ -42,6 +42,17 @@ public class Log {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TransactionType type;
+
+    public Log(LocalDateTime logDate, Item item, Party party, Staff staff, Long quantity, Long unitPrice,
+               TransactionType type){
+        this.logDate = logDate;
+        this.item = item;
+        this.party = party;
+        this.staff = staff;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.type = type;
+    }
 
 }
 
