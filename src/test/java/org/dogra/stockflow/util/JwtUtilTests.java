@@ -53,4 +53,11 @@ public class JwtUtilTests {
     }
 
 
+    @Test
+    void asjfj(){
+        System.out.println(jwtUtil.getSecretKey());
+    }
+
+
+
 }

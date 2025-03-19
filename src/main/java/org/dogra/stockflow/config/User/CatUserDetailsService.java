@@ -15,14 +15,9 @@ public class CatUserDetailsService implements UserDetailsService {
     @Override
     public CatUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Staff staffMember;
-
-        try{
-             staffMember = repo.findByUsername(username).get();
-
-        } catch (Exception e) {
-            throw new UsernameNotFoundException("Staff Member not found");
-        }
+        Staff staffMember = repo.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("Staff Member not found")
+        );
 
         return new CatUserDetails(staffMember);
     }

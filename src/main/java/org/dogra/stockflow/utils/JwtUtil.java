@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.dogra.stockflow.config.User.CatUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.KeyGenerator;
@@ -18,17 +19,13 @@ import java.util.Date;
 public class JwtUtil {
 
     final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
-    private String secretKey = "secretKey";
+
+    @Value("${jwt.secret.key}")
+    private String secretKey;
 
     public JwtUtil() {
-        try {
-            KeyGenerator keygen = KeyGenerator.getInstance("HmacSHA256");
-            secretKey = Base64.getEncoder().encodeToString(keygen.generateKey().getEncoded());
 
-        } catch (Exception e) {
-            logger.warn("Auto secretkey generation failed");
-            secretKey = "jajfasjiwesamjsd23rjwu9sjidfaskf9w8ruw9849sdkfsdfejrh435u89qwpqjnvac";
-        }
+        this.secretKey = "jajfasjiwesamjsd23rjwu9sjidfaskf9w8ruw9849sdkfsdfejrh435u89qwpqjnvac";;
     }
 
 
@@ -54,7 +51,7 @@ public class JwtUtil {
         return "";
     }
 
-    private String getSecretKey() {
+    public String getSecretKey() {
         return secretKey;
     }
 
