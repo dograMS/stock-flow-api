@@ -12,6 +12,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,22 +32,35 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
+    private final String[] AUTH_WHITELIST = {
+            "/api-docs/**",
+            "/swagger-ui/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/webjars/**",
+
+            "/register/login"
+    };
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authenticationProvider(daoAuthenticationProvider());
-        http
-                .authorizeHttpRequests(customizer ->
-                        customizer.requestMatchers("/api/**").permitAll()
-                );
 
-//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http.authorizeHttpRequests(
+                customizer -> customizer
+                    .requestMatchers(AUTH_WHITELIST)
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
+        );
+        http.sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-//        http.authorizeHttpRequests(
-//                customizer -> customizer.requestMatchers("/**").authenticated()
-//        );
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

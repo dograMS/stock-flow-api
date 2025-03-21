@@ -40,7 +40,7 @@ public class JwtUtil {
                     .setSubject(username)
                     .claim("roles", roles)
                     .setIssuedAt(new Date(System.currentTimeMillis()))
-                    .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 + 1000))
+                    .setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
                     .signWith(SignatureAlgorithm.HS256, getSecretKey().getBytes())
                     .compact();
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class JwtUtil {
             return false;
         }else if(!claims.getSubject().equals(userDetails.getUsername())){
             return false;
-        } else if (claims.getExpiration().after(new Date(System.currentTimeMillis()))) {
+        } else if (claims.getExpiration().before(new Date(System.currentTimeMillis()))) {
             return false;
         }
 
