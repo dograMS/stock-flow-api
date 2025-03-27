@@ -30,8 +30,8 @@ public class PartyController {
         }
     }
 
-    @GetMapping("/{page}&{size}")
-    public ResponseEntity<?> getAllAvailableParties(@PathVariable int page, @PathVariable int size){
+    @GetMapping("/parties/all/")
+    public ResponseEntity<?> getAllAvailableParties(@RequestParam("page") int page, @RequestParam("size") int size){
 
         return new ResponseEntity<>(new PageResponseDTO(partyService.getParties(page, size)), HttpStatus.OK);
     }

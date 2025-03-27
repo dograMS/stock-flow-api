@@ -33,10 +33,9 @@ public class PartyService {
 
     public Page<Party> getParties(int pageNumber, int pageSize){
 
-        Sort sortOrder = Sort.by("name").descending()
-                .and(Sort.by("company").descending());
+        Sort sortOrder = Sort.by("name").descending();
 
-        Pageable page = PageRequest.of(pageSize, pageNumber, sortOrder);
+        Pageable page = PageRequest.of(pageNumber, pageSize, sortOrder);
 
         return partyRepo.findAll(page);
 
