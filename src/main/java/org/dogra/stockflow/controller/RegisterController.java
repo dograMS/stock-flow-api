@@ -1,6 +1,6 @@
 package org.dogra.stockflow.controller;
 
-import jakarta.annotation.security.RolesAllowed;
+
 import jakarta.validation.Valid;
 import org.dogra.stockflow.config.User.CatUserDetails;
 import org.dogra.stockflow.model.dto.LoginDTO;
@@ -40,15 +40,16 @@ public class RegisterController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
+        //TODO
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    @PostMapping("/new")
-    @PreAuthorize(value = "{hasRole('ADMIN')}")
+    @PostMapping("/admin/new")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<?> create(@AuthenticationPrincipal CatUserDetails userDetails) {
 
-        if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
-            return new ResponseEntity<>("u called : but not authed", HttpStatus.UNAUTHORIZED);
+        if (!userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STAFF"))) {
+            return new ResponseEntity<>("u called : And authed", HttpStatus.UNAUTHORIZED);
         }
 
         return new ResponseEntity<>("u called :", HttpStatus.OK);

@@ -3,6 +3,7 @@ package org.dogra.stockflow.config.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.dogra.stockflow.model.Staff;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Slf4j
 public class CatUserDetails implements UserDetails {
 
     private Staff staffMember;
@@ -24,9 +26,13 @@ public class CatUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        staffMember.getRole().forEach(role ->
-                authorities.add(new SimpleGrantedAuthority(role.getTitle()))
+        staffMember.getRole().forEach(role -> {
+                    authorities.add(new SimpleGrantedAuthority(role.getTitle()));
+            log.info("CatUser Granted Auths-- " + role.getTitle());
+                }
         );
+
+
 
         return authorities;
     }
